@@ -1,22 +1,45 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import HomePage from '../views/HomePage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
+import CategoryPage from '../views/CategoryPage.vue'
+import DetailPage from '../views/DetailPage.vue'
+import WishlistPage from '../views/WishlistPage.vue'
+// import axios from '../apis/server.js'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'HomePage',
+    component: HomePage
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/register',
+    name: 'RegisterPage',
+    component: RegisterPage
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage
+  },
+  {
+    path: '/category',
+    name: 'CategoryPage',
+    component: CategoryPage
+  },
+  {
+    path: '/wishlist',
+    name: 'WishlistPage',
+    component: WishlistPage
+  },
+  {
+    path: '/product',
+    name: 'DetailPage',
+    component: DetailPage
   }
 ]
 
@@ -24,6 +47,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'WishlistPage' && !localStorage.access_token) {
+    next({ name: 'LoginPage' })
+  } else {
+    next()
+  }
 })
 
 export default router
