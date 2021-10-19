@@ -40,11 +40,11 @@ export default new Vuex.Store({
         data: dataLogin
       })
     },
-    handleGoogleLogin (_, idToken) {
+    handleContactUs (_, dataContactUs) {
       return axios({
         url: '/messages',
         method: 'POST',
-        data: dataRegister,
+        data: dataContactUs
       })
     },
     fetchPosts (context) {
