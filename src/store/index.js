@@ -28,23 +28,23 @@ export default new Vuex.Store({
   actions: {
     handleRegister (_, dataRegister) {
       return axios({
-        url: '/customers/register',
+        url: '/register',
         method: 'POST',
         data: dataRegister
       })
     },
     handleLogin (_, dataLogin) {
       return axios({
-        url: '/customers/login',
+        url: '/login',
         method: 'POST',
         data: dataLogin
       })
     },
     handleGoogleLogin (_, idToken) {
       return axios({
-        url: '/customers/authGoogle',
+        url: '/messages',
         method: 'POST',
-        data: { google_token: idToken }
+        data: dataRegister,
       })
     },
     fetchPosts (context) {

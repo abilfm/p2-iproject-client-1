@@ -6,10 +6,10 @@ import RegisterPage from '../views/RegisterPage.vue'
 import CategoryPage from '../views/CategoryPage.vue'
 import DetailPage from '../views/DetailPage.vue'
 import WishlistPage from '../views/WishlistPage.vue'
-// import axios from '../apis/server.js'
+import ContactUsPage from '../views/ContactUsPage.vue'
+import AboutUsPage from '../views/AboutUsPage.vue'
 
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
@@ -40,6 +40,16 @@ const routes = [
     path: '/product',
     name: 'DetailPage',
     component: DetailPage
+  },
+  {
+    path: '/contact',
+    name: 'ContactUsPage',
+    component: ContactUsPage
+  },
+  {
+    path: '/about',
+    name: 'AboutUsPage',
+    component: AboutUsPage
   }
 ]
 
@@ -49,12 +59,12 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.name === 'WishlistPage' && !localStorage.access_token) {
-    next({ name: 'LoginPage' })
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.name === 'WishlistPage' && !localStorage.access_token) {
+//     next({ name: 'LoginPage' })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router
