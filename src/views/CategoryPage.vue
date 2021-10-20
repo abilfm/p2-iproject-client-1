@@ -29,7 +29,6 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import ProductList from '../components/ProductList.vue'
-// import swal from 'sweetalert'
 
 export default {
   name: 'CategoryPage',

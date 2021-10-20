@@ -10,8 +10,7 @@ export default new Vuex.Store({
     products: [],
     wishlists: [],
     singleProduct: {},
-    categories: [],
-    singleCategory: []
+    categories: []
   },
   mutations: {
     SET_ISLOGIN (state, payload) {
@@ -28,9 +27,6 @@ export default new Vuex.Store({
     },
     SET_SINGLE_PRODUCT (state, payload) {
       state.singleProduct = payload
-    },
-    SET_SINGLE_CATEGORY (state, payload) {
-      state.singleCategory = payload
     }
   },
   actions: {
@@ -55,12 +51,6 @@ export default new Vuex.Store({
         data: dataContactUs
       })
     },
-    fetchPosts () {
-      return axios({
-        url: '/customers/posts',
-        method: 'GET'
-      })
-    },
     fetchCategories () {
       return axios({
         url: '/categories',
@@ -73,43 +63,37 @@ export default new Vuex.Store({
         method: 'GET'
       })
     },
-    fetchFavourites (context, _) {
+    fetchSingleProduct (_, id) {
       return axios({
-        url: '/wishlist',
+        url: `/products/${id}`,
+        method: 'GET'
+      })
+    },
+    fetchWishlist () {
+      return axios({
+        url: '/wishlists',
         method: 'GET',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
     },
-    createFavourites (_, id) {
+    addNewWishlist (_, productId) {
       return axios({
-        url: `/customers/favorites/${id}`,
+        url: `/wishlists/${productId}`,
         method: 'POST',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
     },
-    removeFavourites (_, id) {
+    removeWishlist (_, id) {
       return axios({
-        url: `/customers/favorites/${id}`,
+        url: `/wishlists/${id}`,
         method: 'DELETE',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
-      })
-    },
-    detailPost (_, id) {
-      return axios({
-        url: `/customers/posts/${id}`,
-        method: 'GET'
-      })
-    },
-    handlePostFilter (_, params) {
-      return axios({
-        url: `/customers/posts?filter[category]=${params.category}&page[size]=${params.size}&page[number]=${params.category}`,
-        method: 'GET'
       })
     }
   },

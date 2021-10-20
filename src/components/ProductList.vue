@@ -7,8 +7,8 @@
         <h5>{{singleProduct.brand_name}}</h5>
         <p class="card-text">{{singleProduct.product_name}}</p>
         <div class="d-flex justify-content-between align-items-center">
-          <a @click.prevent="addWishlist('singleProduct.id')" type="click" href="#" class="btn btn-sm btn-primary">+ Add To Wishlist</a>
-          <a @click.prevent="viewPost('singleProduct.id')" type="click" href="#" class="btn btn-sm btn-info">View More...</a>
+          <a @click.prevent="addToWishlist(singleProduct.id)" type="click" href="#" class="btn btn-sm btn-primary">+ Add To Wishlist</a>
+          <a @click.prevent="viewProductDetails(singleProduct.id)" type="click" href="#" class="btn btn-sm btn-info">View Details...</a>
         </div>
       </div>
     </div>
@@ -22,29 +22,31 @@ export default {
   name: 'ProductList',
   props: ['singleProduct'],
   methods: {
-    addWishlist (id) {
-      this.$store.dispatch('createFavourites', id)
-        .then(({ data }) => {
-          this.$store.dispatch('fetchFavourites')
-          this.$router.push({ name: 'FavouritesPage' })
-          swal('Good job!', 'New post has been successfully added!', 'success')
-        })
-        .catch((err) => {
-          swal(`${err.response.data.message}`)
-        })
+    addToWishlist (productId) {
+      if (localStorage.access_token) {
+        this.$store.dispatch('addNewWishlist', productId)
+          .then(({ data }) => {
+            this.$router.push({ name: 'WishlistPage' })
+            swal('Good job!', 'New wishlist has been successfully added!', 'success')
+          })
+          .catch((err) => {
+            swal(`${err.response.data.message}`)
+          })
+      } else {
+        this.$router.push({ name: 'LoginPage' })
+      }
     },
-    viewPost (id) {
-      this.$store.dispatch('detailPost', id)
+    viewProductDetails (id) {
+      this.$store.dispatch('fetchSingleProduct', id)
         .then(({ data }) => {
-          this.$store.commit('SET_SINGLE_POST', data)
+          this.$store.commit('SET_SINGLE_PRODUCT', data)
           this.$router.push({ name: 'DetailPage' })
         })
         .catch((err) => {
+          console.log(err)
           swal(`${err.response.data.message}`)
         })
     }
-  },
-  created () {
   }
 }
 </script>
