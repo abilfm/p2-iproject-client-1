@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-5">
                 <div class="col-md-12 mb-lg-4 mb-3 text-center">
-                  <h1 class="mb-2">BLOG WEBSITE</h1>
+                  <h1 class="mb-2">REGISTER</h1>
                   <form @submit.prevent="userRegister" class="px-md-5">
                     <div class="col-md-12">
                       <div class="form-floating mb-3">
@@ -27,7 +27,7 @@
                         <label for="floatingInput">Username</label>
                       </div>
                       <div class="form-floating mb-3">
-                        <input v-model="phoneNumber" type="text" class="form-control" id="floatingInput" placeholder="Phone Number">
+                        <input v-model="phone_number" type="text" class="form-control" id="floatingInput" placeholder="Phone Number">
                         <label for="floatingInput">Phone Number</label>
                       </div>
                       <div class="form-floating mb-3">
@@ -62,7 +62,7 @@ export default {
       email: '',
       password: '',
       username: '',
-      phoneNumber: '',
+      phone_number: '',
       address: ''
     }
   },
@@ -72,7 +72,7 @@ export default {
         email: this.email,
         password: this.password,
         username: this.username,
-        phoneNumber: this.phoneNumber,
+        phone_number: this.phone_number,
         address: this.address
       }
 

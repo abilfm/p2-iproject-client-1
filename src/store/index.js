@@ -7,22 +7,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    posts: [],
-    favPosts: [],
-    singlePost: {}
+    products: [],
+    wishlists: [],
+    singleProduct: {},
+    categories: []
   },
   mutations: {
     SET_ISLOGIN (state, payload) {
       state.isLogin = payload
     },
-    SET_POSTS (state, payload) {
-      state.posts = payload
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     },
-    SET_FAVOURITE_POSTS (state, payload) {
-      state.favPosts = payload
+    SET_WISHLISTS (state, payload) {
+      state.wishlists = payload
     },
-    SET_SINGLE_POST (state, payload) {
-      state.singlePost = payload
+    SET_CATEGORIES (state, payload) {
+      state.categories = payload
+    },
+    SET_SINGLE_PRODUCT (state, payload) {
+      state.singleProduct = payload
     }
   },
   actions: {
@@ -40,56 +44,56 @@ export default new Vuex.Store({
         data: dataLogin
       })
     },
-    handleGoogleLogin (_, idToken) {
+    handleContactUs (_, dataContactUs) {
       return axios({
         url: '/messages',
         method: 'POST',
-        data: dataRegister,
+        data: dataContactUs
       })
     },
-    fetchPosts (context) {
+    fetchCategories () {
       return axios({
-        url: '/customers/posts',
+        url: '/categories',
         method: 'GET'
       })
     },
-    fetchFavourites (context, _) {
+    fetchProductsByCategory (_, id) {
       return axios({
-        url: '/customers/favorites',
-        set: {
+        url: `/products/category/${id}`,
+        method: 'GET'
+      })
+    },
+    fetchSingleProduct (_, id) {
+      return axios({
+        url: `/products/${id}`,
+        method: 'GET'
+      })
+    },
+    fetchWishlist () {
+      return axios({
+        url: '/wishlists',
+        method: 'GET',
+        headers: {
           access_token: localStorage.getItem('access_token')
-        },
-        method: 'GET'
+        }
       })
     },
-    createFavourites (_, id) {
+    addNewWishlist (_, productId) {
       return axios({
-        url: `/customers/favorites/${id}`,
+        url: `/wishlists/${productId}`,
         method: 'POST',
-        set: {
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
     },
-    removeFavourites (_, id) {
+    removeWishlist (_, id) {
       return axios({
-        url: `/customers/favorites/${id}`,
+        url: `/wishlists/${id}`,
         method: 'DELETE',
-        set: {
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
-      })
-    },
-    detailPost (_, id) {
-      return axios({
-        url: `/customers/posts/${id}`,
-        method: 'GET'
-      })
-    },
-    handlePostFilter (_, params) {
-      return axios({
-        url: `/customers/posts?filter[category]=${params.category}&page[size]=${params.size}&page[number]=${params.category}`,
-        method: 'GET'
       })
     }
   },

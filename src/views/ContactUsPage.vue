@@ -73,6 +73,10 @@ export default {
       this.$store.dispatch('handleContactUs', dataContactUs)
         .then(({ data }) => {
           swal('Good job!', 'Your message has been successfully registered!', 'success')
+          this.name = ''
+          this.email = ''
+          this.subject = ''
+          this.message = ''
         })
         .catch((err) => {
           swal(`${err.response.data.message}`)
