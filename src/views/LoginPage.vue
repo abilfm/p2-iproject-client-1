@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-6">
               <div class="col-md-12 mb-lg-4 mb-3 text-center">
-                <h1 class="mb-5">BLOG WEBSITE</h1>
+                <h1 class="mb-5">LOGIN</h1>
                 <form @submit.prevent="userLogin" class="px-md-5">
                   <div class="col-md-12">
                     <div class="form-floating mb-3">

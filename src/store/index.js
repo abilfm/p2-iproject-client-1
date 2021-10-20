@@ -7,22 +7,30 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
-    posts: [],
-    favPosts: [],
-    singlePost: {}
+    products: [],
+    wishlists: [],
+    singleProduct: {},
+    categories: [],
+    singleCategory: []
   },
   mutations: {
     SET_ISLOGIN (state, payload) {
       state.isLogin = payload
     },
-    SET_POSTS (state, payload) {
-      state.posts = payload
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     },
-    SET_FAVOURITE_POSTS (state, payload) {
-      state.favPosts = payload
+    SET_WISHLISTS (state, payload) {
+      state.wishlists = payload
     },
-    SET_SINGLE_POST (state, payload) {
-      state.singlePost = payload
+    SET_CATEGORIES (state, payload) {
+      state.categories = payload
+    },
+    SET_SINGLE_PRODUCT (state, payload) {
+      state.singleProduct = payload
+    },
+    SET_SINGLE_CATEGORY (state, payload) {
+      state.singleCategory = payload
     }
   },
   actions: {
@@ -47,26 +55,38 @@ export default new Vuex.Store({
         data: dataContactUs
       })
     },
-    fetchPosts (context) {
+    fetchPosts () {
       return axios({
         url: '/customers/posts',
         method: 'GET'
       })
     },
+    fetchCategories () {
+      return axios({
+        url: '/categories',
+        method: 'GET'
+      })
+    },
+    fetchProductsByCategory (_, id) {
+      return axios({
+        url: `/products/category/${id}`,
+        method: 'GET'
+      })
+    },
     fetchFavourites (context, _) {
       return axios({
-        url: '/customers/favorites',
-        set: {
+        url: '/wishlist',
+        method: 'GET',
+        headers: {
           access_token: localStorage.getItem('access_token')
-        },
-        method: 'GET'
+        }
       })
     },
     createFavourites (_, id) {
       return axios({
         url: `/customers/favorites/${id}`,
         method: 'POST',
-        set: {
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
@@ -75,7 +95,7 @@ export default new Vuex.Store({
       return axios({
         url: `/customers/favorites/${id}`,
         method: 'DELETE',
-        set: {
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
