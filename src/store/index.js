@@ -10,7 +10,14 @@ export default new Vuex.Store({
     products: [],
     wishlists: [],
     singleProduct: {},
-    categories: []
+    categories: [],
+    newMessage: null,
+    messages: [],
+    typing: false,
+    username: null,
+    ready: false,
+    info: [],
+    connections: 0
   },
   mutations: {
     SET_ISLOGIN (state, payload) {

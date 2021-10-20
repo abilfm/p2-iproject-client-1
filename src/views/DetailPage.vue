@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div id="detail-page">
     <NavBar></NavBar>
     <!-- DetailPage -->
-    <section id="detail-page">
+    <section >
       <div class="container d-flex align-items-center" style="height: 100vh;">
-        <div class="card shadow">
           <div class="row d-flex align-items-center">
             <div class="col-md-6">
               <img :src="singleProduct.image_URL" alt="Image" class="img-fluid">
@@ -36,8 +35,11 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
+      <section class='comments mt-5' aria-labelledby="comment">
+      <h2 id="comment">Comments</h2>
+      <Disqus shortname='http-localhost-8080-zaxvlp8xlm' />
+      </section>
     </section>
   </div>
 </template>
@@ -45,6 +47,7 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import swal from 'sweetalert'
+import { Disqus } from 'vue-disqus'
 
 export default {
   name: 'DetailPage',
@@ -54,7 +57,8 @@ export default {
     }
   },
   components: {
-    NavBar
+    NavBar,
+    Disqus
   },
   methods: {
     addToWishlist (productId) {
@@ -75,6 +79,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+ @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+#detail-page{
+font-family: 'Lato', sans-serif;
+background-image: linear-gradient(90deg, #e2eceb, #91e7d9);
+}
 </style>
