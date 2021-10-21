@@ -85,10 +85,7 @@ export default {
         })
     },
     handleSdkInit ({ FB, scope }) {
-      console.log('FB====', FB)
-      console.log('SCOPE====', scope)
-      // this.FB = FB
-      // this.scope = scope
+      this.$store.dispatch('handleFacebookLogin', FB.getUserID())
     }
   }
 }

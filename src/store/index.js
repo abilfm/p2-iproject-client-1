@@ -34,6 +34,9 @@ export default new Vuex.Store({
     },
     SET_SINGLE_PRODUCT (state, payload) {
       state.singleProduct = payload
+    },
+    PUSH_MESSAGE (state, payload) {
+      state.messages.push(payload)
     }
   },
   actions: {
@@ -49,6 +52,12 @@ export default new Vuex.Store({
         url: '/login',
         method: 'POST',
         data: dataLogin
+      })
+    },
+    handleFacebookLogin (_) {
+      return axios({
+        url: '/auth/facebook',
+        method: 'GET'
       })
     },
     handleContactUs (_, dataContactUs) {

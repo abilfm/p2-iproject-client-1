@@ -22,7 +22,8 @@
           ></ProductCategory>
         </div>
       </div>
-      <div class="container">
+      <!-- <MessageBox></MessageBox> -->
+      <div class="container mb-5">
         <div class="col-lg-6 offset-lg-3">
           <div v-if="ready">
             <p v-for="user in info" :key="user.id">{{user.username}} {{user.type}}</p>
@@ -67,8 +68,10 @@
 <script>
 import NavBar from '../components/NavBar.vue'
 import ProductCategory from '../components/ProductCategory.vue'
+import { io } from 'socket.io-client'
+// import MessageBox from '../components/MessageBox.vue'
 import swal from 'sweetalert'
-// const socket = io()
+const socket = io()
 
 export default {
   name: 'HomePage',
@@ -91,6 +94,7 @@ export default {
   components: {
     NavBar,
     ProductCategory
+    // MessageBox
   },
   created () {
     this.$store.dispatch('fetchCategories')
@@ -101,76 +105,76 @@ export default {
         swal(`${err.response.data.message}`)
       })
 
-    // window.onbeforeunload = () => {
-    //   socket.emit('leave', this.username)
-    // }
+    window.onbeforeunload = () => {
+      socket.emit('leave', this.username)
+    }
 
-    // socket.on('chat-message', (data) => {
-    //   this.messages.push({
-    //     message: data.message,
-    //     type: 1,
-    //     user: data.user
-    //   })
-    // })
+    socket.on('chat-message', (data) => {
+      this.messages.push({
+        message: data.message,
+        type: 1,
+        user: data.user
+      })
+    })
 
-    // socket.on('typing', (data) => {
-    //   this.typing = data
-    // })
+    socket.on('typing', (data) => {
+      this.typing = data
+    })
 
-    // socket.on('stopTyping', () => {
-    //   this.typing = false
-    // })
+    socket.on('stopTyping', () => {
+      this.typing = false
+    })
 
-    // socket.on('joined', (data) => {
-    //   this.info.push({
-    //     username: data,
-    //     type: 'joined'
-    //   })
+    socket.on('joined', (data) => {
+      this.info.push({
+        username: data,
+        type: 'joined'
+      })
 
-    //   setTimeout(() => {
-    //     this.info = []
-    //   }, 5000)
-    // })
+      setTimeout(() => {
+        this.info = []
+      }, 5000)
+    })
 
-    // socket.on('leave', (data) => {
-    //   this.info.push({
-    //     username: data,
-    //     type: 'left'
-    //   })
+    socket.on('leave', (data) => {
+      this.info.push({
+        username: data,
+        type: 'left'
+      })
 
-    //   setTimeout(() => {
-    //     this.info = []
-    //   }, 5000)
-    // })
+      setTimeout(() => {
+        this.info = []
+      }, 5000)
+    })
 
-    // socket.on('connections', (data) => {
-    //   this.connections = data
-    // })
+    socket.on('connections', (data) => {
+      this.connections = data
+    })
   },
   watch: {
-    // newMessage (value) {
-    //   value ? socket.emit('typing', this.username) : socket.emit('stopTyping')
-    // }
+    newMessage (value) {
+      value ? socket.emit('typing', this.username) : socket.emit('stopTyping')
+    }
   },
   methods: {
-    // send () {
-    //   this.messages.push({
-    //     message: this.newMessage,
-    //     type: 0,
-    //     user: 'Me'
-    //   })
+    send () {
+      this.messages.push({
+        message: this.newMessage,
+        type: 0,
+        user: 'Me'
+      })
 
-    //   socket.emit('chat-message', {
-    //     message: this.newMessage,
-    //     user: this.username
-    //   })
-    //   this.newMessage = null
-    // },
+      socket.emit('chat-message', {
+        message: this.newMessage,
+        user: this.username
+      })
+      this.newMessage = null
+    },
 
-    // addUser () {
-    //   this.ready = true
-    //   socket.emit('joined', this.username)
-    // }
+    addUser () {
+      this.ready = true
+      socket.emit('joined', this.username)
+    }
   }
 }
 </script>
