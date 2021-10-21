@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'https://h8-iproject-week4.herokuapp.com/'
 })

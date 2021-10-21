@@ -29,6 +29,7 @@
                   <div class="register-accounts">
                     <p class="text-center">You don't have account? <a @click.prevent="linkRegister" href="#">Sign Up</a></p>
                     <div class="social-accounts d-flex justify-content-center">
+                     <VFacebookLogin v-model="model" @sdk-init="handleSdkInit" app-id="267574585280098"></VFacebookLogin>
                     </div>
                   </div>
                 </form>
@@ -43,17 +44,22 @@
 
 <script>
 import NavBar from '../components/NavBar.vue'
+import VFacebookLogin from 'vue-facebook-login-component'
 import swal from 'sweetalert'
 
 export default {
   name: 'LoginPage',
   components: {
-    NavBar
+    NavBar,
+    VFacebookLogin
   },
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      FB: {},
+      model: {},
+      scope: {}
     }
   },
   methods: {
@@ -77,6 +83,9 @@ export default {
         .catch((err) => {
           swal(`${err.response.data.message}`)
         })
+    },
+    handleSdkInit ({ FB, scope }) {
+      this.$store.dispatch('handleFacebookLogin', FB.getUserID())
     }
   }
 }
